@@ -1,1 +1,74 @@
 
+# Deployment Steps uat
+
+## Step 1: Update the nuxt.config.ts file
+
+Check the following fields in the nuxt.config.ts:
+1. `typeCheck: false`
+2. `ssr: false`
+
+## Step 2: Remove .output from .gitignore file
+
+## Step 3: Confirm the current branch is 'main'
+
+## Step 4: Take the latest pull from the 'main' branch
+
+```bash
+git checkout main
+git pull
+
+## Step 5: Switch to the 'uat' branch
+
+```bash
+git checkout uat
+
+## Step 6: Merge 'main' into 'uat'
+
+```bash
+git merge main
+
+## Step 7: Install yarn dependencies
+
+```bash
+yarn
+
+## Step 8: Generate Yarn.
+
+```bash
+yarn generate
+
+<<-- yarn success ? .output/public : error -->
+
+## Step 9: Push changes to 'uat' branch after successful yarn generation
+
+```bash
+git add .
+git commit -m "commit-message"
+git push
+
+## Step 10: Digital Ocean Setup
+
+Go to Digital Ocean, click on the respective droplet ('Logistix-uat').
+Enter the droplet console.
+Change directory to 'code/logistix-web':
+
+```bash
+cd code/logistix-web
+
+## Step 11: Confirm and pull the latest changes:
+
+```bash
+git pull
+
+<<-- !! Provide Git username and password when prompted. !! -->
+
+## Step 12: Copy changes to the deployment directory.
+
+```bash
+cp -r .output/public/ /var/www/new
+
+!!NOTE : 
+These revisions aim to improve clarity and ensure consistency in the steps provided. Make sure to adapt them according to your project's specific needs.
+
+
+

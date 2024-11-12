@@ -14,8 +14,8 @@ Check the following fields in the nuxt.config.ts:
 ## Step 4: Take the latest pull from the 'main' branch
 
 ```bash
-git checkout main
-git pull
+```git checkout main```
+```git pull```
 
 ## Step 5: Switch to the 'uat' branch
 

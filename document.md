@@ -1,65 +1,68 @@
 # Setting Up Password-Less Git Access with SSH
 
-This guide explains how to configure password-less access for Git operations on GitHub using SSH keys. Follow the steps below to eliminate the need to enter a username and password every time you interact with your Git repository.
+This guide explains how to set up Git operations on GitHub without entering a password. Follow these steps to use SSH keys.
 
 ---
 
 ## **1. Generate an SSH Key**
 
-If you don’t already have an SSH key, generate one:
+If you do not have an SSH key, create one.
 
 ### For Ed25519 (Recommended):
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-### For RSA (If Required):
+### For RSA (If Needed):
 ```bash
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
 
-- When prompted, save the key in the default location (`~/.ssh/id_ed25519` or `~/.ssh/id_rsa`).
-- Leave the passphrase empty for automatic access, or set one for added security.
+- Save the key in the default location (`~/.ssh/id_ed25519` or `~/.ssh/id_rsa`).
+- Leave the passphrase empty for automatic access, or set one for extra security.
 
 ---
 
-## **2. Add the SSH Key to Your SSH Agent**
+## **2. Add the SSH Key to Your System**
 
 Start the SSH agent:
 ```bash
 eval "$(ssh-agent -s)"
 ```
 
-Add your private key to the agent:
+Add the private key to the agent:
 ```bash
 ssh-add ~/.ssh/id_ed25519
 ```
 
-For RSA:
+If you use RSA:
 ```bash
 ssh-add ~/.ssh/id_rsa
 ```
 
 ---
 
-## **3. Add the SSH Key to Your GitHub Account**
+## **3. Add the SSH Key to GitHub**
 
-1. Copy the public key to your clipboard:
+1. Copy your public key:
    ```bash
    cat ~/.ssh/id_ed25519.pub
    ```
-   (Replace `id_ed25519.pub` with `id_rsa.pub` if you used RSA.)
+   If using RSA:
+   ```bash
+   cat ~/.ssh/id_rsa.pub
+   ```
 
-2. Add the key to GitHub:
+2. Go to GitHub settings:
    - Log in to GitHub.
    - Navigate to **Settings** > **SSH and GPG Keys** > **New SSH Key**.
-   - Paste the key and give it a descriptive title (e.g., "Work Machine").
+   - Paste the public key and name it (e.g., "Work Machine").
 
 ---
 
-## **4. Configure Your Git Repository to Use SSH**
+## **4. Set Your Git Remote to Use SSH**
 
-Update the remote URL of your Git repository to use SSH:
+Update your repository URL to use SSH:
 ```bash
 git remote set-url origin git@github.com:<username>/<repository>.git
 ```
@@ -69,12 +72,12 @@ Example:
 git remote set-url origin git@github.com:strebentechnik/logixman-web.git
 ```
 
-Verify the remote URL:
+Check the remote URL:
 ```bash
 git remote -v
 ```
 
-Expected output:
+You should see:
 ```
 origin  git@github.com:<username>/<repository>.git (fetch)
 origin  git@github.com:<username>/<repository>.git (push)
@@ -84,7 +87,7 @@ origin  git@github.com:<username>/<repository>.git (push)
 
 ## **5. Test Your SSH Connection**
 
-Verify that your SSH key is correctly configured:
+Check if your SSH key works:
 ```bash
 ssh -T git@github.com
 ```
@@ -96,9 +99,9 @@ Hi <username>! You've successfully authenticated, but GitHub does not provide sh
 
 ---
 
-## **6. Perform Git Operations Without a Password**
+## **6. Use Git Without Password**
 
-After configuring SSH, you can use Git commands without entering a username or password.
+After setting up SSH, you can use Git commands without entering a username or password.
 
 Examples:
 ```bash
@@ -110,29 +113,29 @@ git push
 
 ## **7. Troubleshooting**
 
-### **A. Permission Denied (Public Key)**
+### **A. Permission Denied**
 - Ensure your SSH key is added to GitHub.
-- Check file permissions:
+- Check permissions for your SSH key files:
   ```bash
   chmod 600 ~/.ssh/id_ed25519
   chmod 700 ~/.ssh
   ```
 
 ### **B. Repository Not Found**
-- Verify the repository URL.
-- Ensure your account has access to the repository.
+- Verify the repository URL is correct.
+- Ensure your GitHub account has access to the repository.
 
-### **C. Still Prompted for Username/Password**
-- Ensure the SSH key is added to the agent:
+### **C. Still Asked for Password**
+- Add the SSH key to the agent:
   ```bash
   ssh-add ~/.ssh/id_ed25519
   ```
-- Confirm the remote URL uses SSH, not HTTPS:
+- Confirm the remote URL is set to SSH:
   ```bash
   git remote -v
   ```
 
 ---
 
-By following this guide, you’ll configure password-less SSH access for GitHub, improving convenience and security for your Git operations.
+This guide helps you configure password-less Git access with SSH for convenience and security.
 
